@@ -8,9 +8,6 @@ public class User {
     private Long id;
     private String name;
 
-    public User() {
-    }
-
     public User(Long id, String name) {
         this.id = id;
         this.name = name;
@@ -21,7 +18,7 @@ public class User {
     }
 
     public void update(String name) {
-
+        this.name = name;
     }
 }
 
