@@ -4,11 +4,13 @@ import com.example.demo.user.PasswordEncryptor;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.dto.CreateUserRequest;
 import com.example.demo.user.dto.UserResponse;
+import com.example.demo.user.exception.AuthenticationException;
 import com.example.demo.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,12 +74,10 @@ public class UserService {
     }
 
 
-//    private User getByEmail(String email) {
-//        return users.values().stream()
-//                .filter(user -> user.getEmail().equals(email))
-//                .findAny()
-//                .orElseThrow(IllegalAccessError::new);
-//    }
+    private User getByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 email입니다."));
+    }
 
     /**
      * 1. 로그인 이전 : 해당 세션ID로 아무런 Attribute 세팅 X
@@ -86,23 +86,23 @@ public class UserService {
      */
 
     // TODO: 로그인한 사용자가 다시 로그인을 시도할 때 처리
-//    public void login(HttpSession httpSession, String email, String password) {
-//        Object loginUserAttr = httpSession.getAttribute("LOGIN_USER");
-//        if (loginUserAttr == null) {
-//            System.out.println("로그인을 아직 안했다.");
-//        } else {
-//            User loginUser = (User) loginUserAttr;
-//            throw new AuthenticationException("이미 로그인한 사용자입니다.");
-//        }
-//
-//        String encryptedPasswordQuery = PasswordEncryptor.encrypt(password);
-//        User user = getByEmail(email);
-//        if (!user.matchPassword(encryptedPasswordQuery)) {
-//            throw new AuthenticationException("로그인에 실패했습니다.");
-//        }
-//        httpSession.setAttribute("LOGIN_USER", user);
-//        System.out.println("로그인에 성공했습니다.");
-//    }
+    public void login(HttpSession httpSession, String email, String password) {
+        Object loginUserAttr = httpSession.getAttribute("LOGIN_USER");
+        if (loginUserAttr == null) {
+            System.out.println("로그인을 아직 안했다.");
+        } else {
+            User loginUser = (User) loginUserAttr;
+            throw new AuthenticationException("이미 로그인한 사용자입니다.");
+        }
+
+        String encryptedPasswordQuery = PasswordEncryptor.encrypt(password);
+        User user = getByEmail(email);
+        if (!user.matchPassword(encryptedPasswordQuery)) {
+            throw new AuthenticationException("로그인에 실패했습니다.");
+        }
+        httpSession.setAttribute("LOGIN_USER", user);
+        System.out.println("로그인에 성공했습니다.");
+    }
 //
 //    public void logout(HttpSession httpSession) {
 //        httpSession.invalidate();

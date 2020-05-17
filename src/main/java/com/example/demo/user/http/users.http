@@ -28,5 +28,5 @@ PUT localhost:8080/users/1?name=updated
 DELETE localhost:8080/users/2
 
 ### login
-GET localhost:8080/login?email=tae@gmail.com&password=passwor
+GET localhost:8080/login?email=tae@gmail.com&password=password
 Content-Type: application/json

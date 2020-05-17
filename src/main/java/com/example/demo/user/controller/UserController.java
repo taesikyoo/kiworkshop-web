@@ -6,6 +6,7 @@ import com.example.demo.user.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -48,10 +49,10 @@ public class UserController {
         userService.delete(id);
     }
 
-//    @GetMapping("/login")
-//    public void login(HttpSession httpSession, String email, String password) {
-//        userService.login(httpSession, email, password);
-//    }
+    @GetMapping("/login")
+    public void login(HttpSession httpSession, String email, String password) {
+        userService.login(httpSession, email, password);
+    }
 
     @PostConstruct // 생성자가 만들어진후 불려진다
     private void portConstruct() {
