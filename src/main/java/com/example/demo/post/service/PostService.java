@@ -1,9 +1,10 @@
-package com.example.demo.post;
+package com.example.demo.post.service;
 
+import com.example.demo.post.domain.Post;
 import com.example.demo.post.dto.CreatePostRequest;
 import com.example.demo.post.repository.PostRepository;
 import com.example.demo.user.SessionUtils;
-import com.example.demo.user.User;
+import com.example.demo.user.domain.User;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 

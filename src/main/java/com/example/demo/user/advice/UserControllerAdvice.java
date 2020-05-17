@@ -1,4 +1,4 @@
-package com.example.demo.user;
+package com.example.demo.user.advice;
 
 import com.example.demo.user.exception.AuthenticationException;
 import com.example.demo.user.exception.PasswordNotMatchedException;

@@ -1,11 +1,11 @@
-package com.example.demo.user;
+package com.example.demo.user.controller;
 
 import com.example.demo.user.dto.CreateUserRequest;
 import com.example.demo.user.dto.UserResponse;
+import com.example.demo.user.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -13,7 +13,6 @@ public class UserController {
 
     private UserService userService;
 
-    // dependency injection
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -33,21 +32,21 @@ public class UserController {
         return userService.getById(id);
     }
 
-/*    @GetMapping("/users/search")
-    public List<UserResponse> search(@RequestParam String keyword,
-                                     @RequestParam(required = false) List<String> excludes) {
-        return userService.search(keyword, excludes);
-    }
+//    @GetMapping("/users/search")
+//    public List<UserResponse> search(@RequestParam String keyword,
+//                                     @RequestParam(required = false) List<String> excludes) {
+//        return userService.search(keyword, excludes);
+//    }
 
-    @PutMapping("/users")
-    public UserResponse update() {
-        return userService.update(0L, "nameUpdated");
+    @PutMapping("/users/{id}")
+    public UserResponse update(@PathVariable Long id, @RequestParam String name) {
+        return userService.update(id, name);
     }
 
     @DeleteMapping("/users/{id}")
     public void delete(@PathVariable Long id) {
         userService.delete(id);
-    }*/
+    }
 
 //    @GetMapping("/login")
 //    public void login(HttpSession httpSession, String email, String password) {

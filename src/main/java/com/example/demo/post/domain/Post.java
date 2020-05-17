@@ -1,6 +1,6 @@
-package com.example.demo.post;
+package com.example.demo.post.domain;
 
-import com.example.demo.user.User;
+import com.example.demo.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

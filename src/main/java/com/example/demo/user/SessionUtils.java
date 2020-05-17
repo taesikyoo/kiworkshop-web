@@ -1,5 +1,6 @@
 package com.example.demo.user;
 
+import com.example.demo.user.domain.User;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

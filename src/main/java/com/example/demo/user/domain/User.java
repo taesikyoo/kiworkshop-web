@@ -1,4 +1,4 @@
-package com.example.demo.user;
+package com.example.demo.user.domain;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -37,6 +37,10 @@ public class User {
 
     public boolean matchPassword(String passwordQuery) {
         return this.password.equals(passwordQuery);
+    }
+
+    public void update(String name) {
+        this.name = name;
     }
 }
 

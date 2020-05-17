@@ -1,6 +1,8 @@
-package com.example.demo.post;
+package com.example.demo.post.controller;
 
+import com.example.demo.post.domain.Post;
 import com.example.demo.post.dto.CreatePostRequest;
+import com.example.demo.post.service.PostService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;

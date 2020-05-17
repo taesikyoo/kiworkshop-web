@@ -9,7 +9,23 @@ Content-Type: application/json
 }
 
 ###
+POST localhost:8080/users
+Content-Type: application/json
+
+{
+  "name": "hello",
+  "email": "hello@gmail.com",
+  "password": "password"
+}
+
+### get all
 GET localhost:8080/users
+
+###
+PUT localhost:8080/users/1?name=updated
+
+###
+DELETE localhost:8080/users/2
 
 ### login
 GET localhost:8080/login?email=tae@gmail.com&password=passwor

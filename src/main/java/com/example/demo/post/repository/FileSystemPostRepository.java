@@ -1,6 +1,6 @@
 package com.example.demo.post.repository;
 
-import com.example.demo.post.Post;
+import com.example.demo.post.domain.Post;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
