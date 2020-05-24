@@ -1,6 +1,6 @@
 package com.example.demo.user.service;
 
-import com.example.demo.user.PasswordEncryptor;
+import com.example.demo.user.util.PasswordEncryptor;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.dto.CreateUserRequest;
 import com.example.demo.user.dto.UserResponse;

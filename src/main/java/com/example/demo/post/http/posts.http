@@ -3,6 +3,22 @@ POST localhost:8080/posts
 Content-Type: application/json
 
 {
-  "content": "hello",
-  "authorId": 0
+  "content": "안녕하세요."
 }
+
+###
+POST localhost:8080/posts
+Content-Type: application/json
+
+{
+  "content": "2번째 포스트입니당"
+}
+
+### get all
+GET localhost:8080/posts
+
+###
+PUT localhost:8080/posts/2?content="updated!"
+
+###
+DELETE localhost:8080/posts/2
