@@ -20,7 +20,7 @@ import java.util.List;
 public class Post {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter
     private Long id;
 
@@ -29,8 +29,7 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     private User author;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "like_action_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
     private List<LikeAction> likes = new ArrayList<>();
 
     @CreatedDate

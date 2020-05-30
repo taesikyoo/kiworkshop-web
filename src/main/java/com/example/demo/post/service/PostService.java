@@ -1,11 +1,13 @@
 package com.example.demo.post.service;
 
+import com.example.demo.like.LikeAction;
 import com.example.demo.post.domain.Post;
 import com.example.demo.post.dto.CreatePostRequest;
 import com.example.demo.post.dto.PostResponse;
 import com.example.demo.post.repository.PostRepository;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.util.SessionUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 // TODO: 바로 스니펫, 날짜적기
+@Slf4j
 @Service
 public class PostService {
 
@@ -46,6 +49,13 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 id의 게시물이 없습니다."));
     }
 
+    public PostResponse readPost(Long id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 id의 게시물이 없습니다. id=" + id));
+        List<LikeAction> likes = post.getLikes();
+        return getPostResponse(post);
+    }
+
     @Transactional
     public PostResponse update(Long id, String content) {
         Post post = postRepository.findById(id)
@@ -64,6 +74,7 @@ public class PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 id의 게시물이 없습니다. id=" + id));
         post.addLike(loginUser);
+        log.info("{}", post.getLikes().size());
     }
 
     private PostResponse getPostResponse(Post post) {

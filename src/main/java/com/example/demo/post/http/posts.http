@@ -27,4 +27,4 @@ PUT localhost:8080/posts/2?content="updated!"
 DELETE localhost:8080/posts/2
 
 ### like
-POST localhost:8080/posts/3
+POST localhost:8080/posts/1
