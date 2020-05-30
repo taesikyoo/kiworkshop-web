@@ -34,7 +34,7 @@ public class PostController {
 
     @GetMapping("/posts/{id}")
     public PostResponse get(@PathVariable Long id) {
-        return postService.getById(id);
+        return postService.readPost(id);
     }
 
     @PutMapping("/posts/{id}")
