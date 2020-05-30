@@ -1,5 +1,6 @@
 package com.example.demo.post.domain;
 
+import com.example.demo.like.LikeAction;
 import com.example.demo.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,11 +9,10 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -20,15 +20,18 @@ import java.time.LocalDateTime;
 public class Post {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter
     private Long id;
 
     private String content;
-    private int likeCount;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User author;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "like_action_id")
+    private List<LikeAction> likes = new ArrayList<>();
 
     @CreatedDate
     private LocalDateTime createdAt;
@@ -38,7 +41,6 @@ public class Post {
     @Builder
     public Post(String content, User author) {
         this.content = content;
-        this.likeCount = 0;
         this.author = author;
         this.createdAt = LocalDateTime.now();
         this.modifiedAt = LocalDateTime.now();
@@ -46,5 +48,9 @@ public class Post {
 
     public void update(String content) {
         this.content = content;
+    }
+
+    public void addLike(User user) {
+        likes.add(new LikeAction(this, user));
     }
 }

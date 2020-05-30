@@ -14,6 +14,9 @@ Content-Type: application/json
   "content": "2번째 포스트입니당"
 }
 
+### get
+GET localhost:8080/posts/1
+
 ### get all
 GET localhost:8080/posts
 
@@ -22,3 +25,6 @@ PUT localhost:8080/posts/2?content="updated!"
 
 ###
 DELETE localhost:8080/posts/2
+
+### like
+POST localhost:8080/posts/3

@@ -58,6 +58,14 @@ public class PostService {
         postRepository.deleteById(id);
     }
 
+    @Transactional
+    public void likePost(HttpSession httpSession, Long id) {
+        User loginUser = (User) httpSession.getAttribute("LOGIN_USER");
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 id의 게시물이 없습니다. id=" + id));
+        post.addLike(loginUser);
+    }
+
     private PostResponse getPostResponse(Post post) {
         return PostResponse.builder()
                 .id(post.getId())

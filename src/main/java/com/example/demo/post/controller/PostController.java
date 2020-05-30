@@ -22,6 +22,11 @@ public class PostController {
         return postService.create(httpSession, createPostRequest);
     }
 
+    @PostMapping("/posts/{id}")
+    public void likePost(HttpSession httpSession, @PathVariable Long id) {
+        postService.likePost(httpSession, id);
+    }
+
     @GetMapping("/posts")
     public List<PostResponse> getAll() {
         return postService.getAll();

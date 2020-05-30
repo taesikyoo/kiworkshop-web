@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -15,13 +14,17 @@ public class LikeAction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "like_action_id")
     private Long id;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
 
-    @OneToMany
-    private List<User> users;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
-
+    public LikeAction(Post post, User user) {
+        this.post = post;
+        this.user = user;
+    }
 }
