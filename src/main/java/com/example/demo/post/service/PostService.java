@@ -1,6 +1,7 @@
 package com.example.demo.post.service;
 
 import com.example.demo.like.LikeAction;
+import com.example.demo.like.LikeResponse;
 import com.example.demo.post.domain.Post;
 import com.example.demo.post.dto.CreatePostRequest;
 import com.example.demo.post.dto.PostResponse;
@@ -49,10 +50,10 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 id의 게시물이 없습니다."));
     }
 
+    @Transactional(readOnly = true)
     public PostResponse readPost(Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 id의 게시물이 없습니다. id=" + id));
-        List<LikeAction> likes = post.getLikes();
         return getPostResponse(post);
     }
 
@@ -78,9 +79,18 @@ public class PostService {
     }
 
     private PostResponse getPostResponse(Post post) {
+        LikeResponse likeResponse = createLikeResponse(post.getLikes());
         return PostResponse.builder()
                 .id(post.getId())
                 .content(post.getContent())
+                .createdAt(post.getCreatedAt())
+                .modifiedAt(post.getModifiedAt())
+                .likeResponse(likeResponse)
                 .build();
+    }
+
+    private LikeResponse createLikeResponse(List<LikeAction> likes) {
+        List<String> likeUsersNames = likes.stream().map(like -> like.getUser().getName()).collect(Collectors.toList());
+        return new LikeResponse(likeUsersNames);
     }
 }

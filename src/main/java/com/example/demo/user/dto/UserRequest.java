@@ -2,17 +2,18 @@ package com.example.demo.user.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
-public class LoginRequest {
+public class UserRequest {
+
     private String email;
     private String password;
+    private String name;
 
     @Builder
-    public LoginRequest(String email, String password) {
+    public UserRequest(String email, String password, String name) {
         this.email = email;
         this.password = password;
+        this.name = name;
     }
 }

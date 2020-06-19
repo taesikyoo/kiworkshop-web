@@ -1,5 +1,6 @@
 package com.example.demo.post.dto;
 
+import com.example.demo.like.LikeResponse;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,15 +13,18 @@ public class PostResponse {
 
     private String content;
 
+    private LikeResponse likeResponse;
+
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
     @Builder
-    public PostResponse(Long id, String content, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+    public PostResponse(Long id, String content, LocalDateTime createdAt, LocalDateTime modifiedAt, LikeResponse likeResponse) {
         this.id = id;
         this.content = content;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
+        this.likeResponse = likeResponse;
     }
 }
 

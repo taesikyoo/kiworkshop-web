@@ -1,6 +1,6 @@
 package com.example.demo.user.controller;
 
-import com.example.demo.user.dto.CreateUserRequest;
+import com.example.demo.user.dto.UserRequest;
 import com.example.demo.user.dto.UserResponse;
 import com.example.demo.user.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public UserResponse create(@RequestBody CreateUserRequest createUserRequest) {
+    public UserResponse create(@RequestBody UserRequest createUserRequest) {
         return userService.create(createUserRequest);
     }
 

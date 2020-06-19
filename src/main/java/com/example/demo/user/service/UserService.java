@@ -2,7 +2,7 @@ package com.example.demo.user.service;
 
 import com.example.demo.user.util.PasswordEncryptor;
 import com.example.demo.user.domain.User;
-import com.example.demo.user.dto.CreateUserRequest;
+import com.example.demo.user.dto.UserRequest;
 import com.example.demo.user.dto.UserResponse;
 import com.example.demo.user.exception.AuthenticationException;
 import com.example.demo.user.repository.UserRepository;
@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,7 +24,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserResponse create(CreateUserRequest createUserRequest) {
+    public UserResponse create(UserRequest createUserRequest) {
         User user = User.builder()
                 .email(createUserRequest.getEmail())
                 .password(PasswordEncryptor.encrypt(createUserRequest.getPassword()))
@@ -98,15 +99,19 @@ public class UserService {
         String encryptedPasswordQuery = PasswordEncryptor.encrypt(password);
         User user = getByEmail(email);
         if (!user.matchPassword(encryptedPasswordQuery)) {
-            throw new AuthenticationException("로그인에 실패했습니다.");
+            throw new AuthenticationException("잘못된 패스워드 입니다.");
         }
         httpSession.setAttribute("LOGIN_USER", user);
         System.out.println("로그인에 성공했습니다.");
     }
-//
-//    public void logout(HttpSession httpSession) {
-//        httpSession.invalidate();
-//    }
+
+    public void logout(HttpSession session) {
+        Object loginedUser = session.getAttribute("LOGIN_USER");
+        if (Objects.isNull(loginedUser)) {
+            throw new IllegalArgumentException("로그인 되어 있지 않습니다");
+        }
+        session.invalidate();
+    }
 
     private UserResponse getUserResponse(User user) {
         return UserResponse.builder()
